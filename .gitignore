@@ -1,0 +1,36 @@
+# python cache
+__pycache__/
+*.py[cod]
+
+# локальные БД
+db/__pycache__/
+db/users.db
+instanse/database.db
+path_to_your_db.sqlite
+
+# логи
+logs/
+*.log
+
+# логи метрик
+metrics/__pycache__/
+metrics/metrics.log
+
+# CatBoost info
+model/__pycache__/
+model/catboost_info/
+
+# исходные файлы
+model/data/*.csv
+model/data/cleaned_properties.parquet
+
+# папка с графиками
+model/images/
+
+# Jupyter checkpoints
+*.ipynb_checkpoints
+
+# Utils
+utils/__pycache__/
+
+.dockerignore

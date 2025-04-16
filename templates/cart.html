@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Корзина</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Корзина</h1>
+    </header>
+
+    <main>
+        {% if cart_items %}
+        <form method="post" action="{{ url_for('routes.checkout') }}">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Выбрать</th>
+                        <th>Товар ID</th>
+                        <th>Количество</th>
+                        <th>Управление</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in cart_items %}
+                    <tr>
+                        <td>
+                            <input type="checkbox" name="selected_items" value="{{ item.item_id }}">
+                        </td>
+                        <td>{{ item.item_id }}</td>
+                        <td>
+                            <form method="post" action="{{ url_for('routes.update_quantity', item_id=item.item_id, action='decrease') }}" style="display:inline;">
+                                <button type="submit">-</button>
+                            </form>
+                            {{ item.count }}
+                            <form method="post" action="{{ url_for('routes.update_quantity', item_id=item.item_id, action='increase') }}" style="display:inline;">
+                                <button type="submit">+</button>
+                            </form>
+                        </td>
+                        <td>
+                            <form method="post" action="{{ url_for('routes.remove_item', item_id=item.item_id) }}">
+                                <button type="submit">Удалить</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <p><strong>Всего товаров в корзине:</strong> {{ total_items }}</p>
+
+            <button type="submit">Оплатить выбранные товары</button>
+        </form>
+    {% else %}
+        <p>Опция временно отсутствует.</p>
+    {% endif %}
+
+    <a href="{{ url_for('routes.index') }}" class="button return-button">Вернуться на главную</a>
+    {% if user %}
+    <a href="{{ url_for('routes.user_page', user_id=user.visitorid) }}" class="button return-button">Вернуться к рекомендациям</a>
+    {% endif %}
+    </main>
+</body>
+</html>

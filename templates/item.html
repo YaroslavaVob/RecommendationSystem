@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Товар {{ item.item_id }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Товар {{ item.item_id }}</h1>
+    </header>
+
+    <main>
+        <h2>Описание (свойства) товара:</h2>
+        <ul>
+            {% for prop in item.properties_list %}
+                <li>{{ prop }}</li>
+            {% endfor %}
+        </ul>
+
+        <form method="POST">
+            <button type="submit">Добавить в корзину</button>
+        </form>
+        <br>
+        <a href="{{ url_for('routes.cart_view') }}"><button>Перейти в корзину</button></a>
+        <a href="{{ url_for('routes.index') }}"><button>Вернуться на главную</button></a>
+    </main>
+</body>
+</html>

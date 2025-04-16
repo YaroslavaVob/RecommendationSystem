@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hybrid Recommendation System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Гибридная рекомендательная система</h1>
+    </header>
+
+    <main>
+        <h2>Рекомендации для пользователя</h2>
+        <form action="{{ url_for('routes.recommendations_view') }}" method="POST">
+            <label for="user_id">Введите ID пользователя:</label>
+            <input type="text" id="user_id" name="user_id" required>
+            <button type="submit">Получить рекомендации</button>
+        </form>
+
+        <h2>Поиск товара</h2>
+        <form action="{{ url_for('routes.search_item') }}" method="POST">
+            <label for="item_id">Введите ID товара:</label>
+            <input type="text" id="item_id" name="item_id" required>
+            <button type="submit">Найти товар</button>
+        </form>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul class="flash-messages">
+                    {% for category, message in messages %}
+                        <li class="{{ category }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+    </main>
+</body>
+</html>

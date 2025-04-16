@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Страница пользователя</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Рекомендации и история пользователя {{ user.visitorid }}</h1>
+    </header>
+
+    <main>
+        <h2>🎯 Рекомендации</h2>
+        <ul style="list-style: none; padding: 0;">
+            {% for item in recommended_items %}
+                <li style="border: 3px solid tomato; border-radius: 8px; padding: 10px; margin-bottom: 10px;">
+                    <strong>Товар ID:</strong> {{ item.itemid }}<br>
+                    <strong>Свойства:</strong> {{ item.properties }}<br>
+                    <a href="{{ url_for('routes.item_view', item_id=item.itemid) }}">
+                        <button>Посмотреть товар</button>
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+
+        <a href="{{ url_for('routes.index') }}" class="button return-button">Вернуться на главную</a>
+
+        <h2>🕘 История взаимодействий</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Товар ID</th>
+                    <th>Действие</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for action in actions %}
+                <tr>
+                    <td>{{ action.itemid }}</td>
+                    <td>{{ action.event }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </main>
+</body>
+</html>
